@@ -149,3 +149,24 @@ void BankServer::stop() {
 
     clientThreads.clear();
 }
+
+
+int main() {
+    const int port = 8080; // Change to the desired port number
+    const std::string usersFilePath = "/database/users.txt"; // Change to the path of your user data file
+
+    BankServer bankServer(port, usersFilePath);
+
+    bankServer.start();
+
+    // Keep the server running until user input
+    std::cout << "Bank server is running. Press Enter to stop." << std::endl;
+    std::cin.get();
+
+    bankServer.stop();
+
+    std::cout << "Bank server stopped." << std::endl;
+
+    return 0;
+}
+

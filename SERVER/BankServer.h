@@ -2,7 +2,7 @@
 #include <vector>
 #include <thread>
 #include <atomic>
-#include "Bank.h"
+#include "bank.h"
 
 class BankServer {
 private:
