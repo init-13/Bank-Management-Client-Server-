@@ -14,9 +14,13 @@ BankServer::~BankServer() {
 }
 
 void BankServer::handleClient(int clientSocket) {
+
+    std::cout << "A Client connected." << std::endl;
+     
     const int BUFFER_SIZE = 4096;
     char buffer[BUFFER_SIZE] = {0};
 
+    while(1){
     // Receive data from the client
     int bytesRead = recv(clientSocket, buffer, BUFFER_SIZE - 1, 0);
     if (bytesRead <= 0) {
@@ -27,6 +31,7 @@ void BankServer::handleClient(int clientSocket) {
 
     // Parse the received message (assuming it's a string)
     std::string request(buffer);
+    std::cout<< "Client requested: "<<buffer<<std::endl;
 
     // Process the client's request
     std::string response;
@@ -64,7 +69,7 @@ void BankServer::handleClient(int clientSocket) {
                 username = username.substr(0, delimiterPos);
             }
         }
-
+        //    std::cout<<username<<" "<<password<<std::endl;
         // Call the registerUser function of the Bank class to register a new user
         if (bank.registerUser(username, password)) {
             // Successful registration
@@ -75,7 +80,8 @@ void BankServer::handleClient(int clientSocket) {
         }
     } else {
         // Invalid request
-        response = "FAILURE|Invalid request.";
+        response = "FAILURE|Invalid request.|EXITING";
+        break;
     }
 
     // Send the response back to the client
@@ -83,7 +89,7 @@ void BankServer::handleClient(int clientSocket) {
     if (bytesSent <= 0) {
         std::cerr << "Error sending response to the client." << std::endl;
     }
-
+    }
     // Close the client socket
     close(clientSocket);
 }
@@ -126,7 +132,7 @@ void BankServer::start() {
             std::cerr << "Error accepting client connection" << std::endl;
             continue;
         }
-
+        
         std::thread clientThread(&BankServer::handleClient, this, clientSocket);
         clientThreads.push_back(std::move(clientThread));
     }
@@ -153,7 +159,7 @@ void BankServer::stop() {
 
 int main() {
     const int port = 8080; // Change to the desired port number
-    const std::string usersFilePath = "/database/users.txt"; // Change to the path of your user data file
+    const std::string usersFilePath = "database/users.txt"; // Change to the path of your user data file
 
     BankServer bankServer(port, usersFilePath);
 

@@ -1,4 +1,3 @@
-// BankClient.cpp
 #include "BankClient.h"
 #include <iostream>
 #include <cstring>

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "BankClient.h"
+#include "BankClient.cpp"
 
 void printMainMenu() {
     std::cout << "==== Banking System ====" << std::endl;
@@ -75,6 +75,7 @@ int main() {
                 }
             } else if (choice == 3) {
                 std::cout << "Exiting..." << std::endl;
+                client.sendRequest("EXIT");
                 break;
             } else {
                 std::cout << "Invalid choice. Please try again." << std::endl;

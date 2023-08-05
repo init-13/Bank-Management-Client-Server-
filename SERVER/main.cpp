@@ -35,7 +35,17 @@ int main() {
     Bank bank(usersFilePath);
 
     int choice;
-    do {clearTerminalWithDelay();
+    do {
+        // #ifdef _WIN32 
+        //         Sleep(2000);
+        // #else 
+        //         sleep(2);
+        // #endif
+        
+        // clearTerminalWithDelay();
+        
+        std::cout<<std::endl
+        <<std::endl;
         displayMainMenu();
         std::cin >> choice;
 
@@ -67,6 +77,8 @@ int main() {
                     switch (choice) {
                     case 1:
                         currentUser->viewAccountDetails();
+                        
+
                         break;
                     case 2: {
                         double amount;
